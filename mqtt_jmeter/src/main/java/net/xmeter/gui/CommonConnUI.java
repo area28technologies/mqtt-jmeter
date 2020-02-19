@@ -1,9 +1,6 @@
 package net.xmeter.gui;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -44,6 +41,7 @@ public class CommonConnUI implements ChangeListener, ActionListener, Constants{
 
 	private JCheckBox dualAuth = new JCheckBox("Dual SSL authentication");
 	private JLabeledTextField wsPath = new JLabeledTextField("WS Path: ", 10);
+	private final JLabeledTextField wsAuthHeader = new JLabeledTextField("Websocket Auth Header: ");
 
 //	private final JLabeledTextField tksFilePath = new JLabeledTextField("Trust Key Store(*.jks):       ", 25);
 	private final JLabeledTextField ccFilePath = new JLabeledTextField("Client Certification(*.p12):", 25);
@@ -128,7 +126,7 @@ public class CommonConnUI implements ChangeListener, ActionListener, Constants{
 		pPanel.setLayout(new BorderLayout());
 		//pPanel.setLayout(new GridLayout(1, 2));
 
-		JPanel pCenter = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel pCenter = new HorizontalPanel();
 //		clientNames = new JLabeledChoice("Clients:", clientNamesList.toArray(new String[] {}), true, false);
 //		clientNames.addChangeListener(this);
 //		pCenter.add(clientNames);
@@ -142,6 +140,9 @@ public class CommonConnUI implements ChangeListener, ActionListener, Constants{
 		wsPath.setFont(null);
 		wsPath.setVisible(false);
 		pCenter.add(wsPath);
+
+		wsAuthHeader.setVisible(false);
+		pCenter.add(wsAuthHeader);
 
 		pPanel.add(pCenter, BorderLayout.CENTER);
 
@@ -241,6 +242,8 @@ public class CommonConnUI implements ChangeListener, ActionListener, Constants{
 			boolean wsProtocol = Util.isWebSocketProtocol(protocols.getText());
 			wsPath.setVisible(wsProtocol);
 			wsPath.setEnabled(wsProtocol);
+			wsAuthHeader.setVisible(wsProtocol);
+			wsAuthHeader.setEnabled(wsProtocol);
 //		} else if (e.getSource() == clientNames) {
 //			int index = clientNames.getSelectedIndex();
 //			if (index > -1) {
@@ -283,6 +286,10 @@ public class CommonConnUI implements ChangeListener, ActionListener, Constants{
 		wsPath.setVisible(wsProtocol);
 		wsPath.setEnabled(wsProtocol);
 
+		wsAuthHeader.setText(sampler.getWsAuthHeader());
+		wsAuthHeader.setVisible(wsProtocol);
+		wsAuthHeader.setEnabled(wsProtocol);
+
 		if(sampler.isDualSSLAuth()) {
 			dualAuth.setVisible(true);
 			dualAuth.setSelected(sampler.isDualSSLAuth());	
@@ -319,6 +326,7 @@ public class CommonConnUI implements ChangeListener, ActionListener, Constants{
 //		sampler.setMqttClientName(clientNames.getText());
 		sampler.setProtocol(protocols.getText());
 		sampler.setWsPath(wsPath.getText());
+		sampler.setWsAuthHeader(wsAuthHeader.getText());
 		sampler.setDualSSLAuth(dualAuth.isSelected());
 //		sampler.setKeyStoreFilePath(tksFilePath.getText());
 //		sampler.setKeyStorePassword(tksPassword.getText());
@@ -357,6 +365,7 @@ public class CommonConnUI implements ChangeListener, ActionListener, Constants{
 
 		dualAuth.setSelected(false);
 		wsPath.setText("");
+		wsAuthHeader.setText("");
 //		tksFilePath.setText("");
 //		tksPassword.setText("");
 		ccFilePath.setText("");

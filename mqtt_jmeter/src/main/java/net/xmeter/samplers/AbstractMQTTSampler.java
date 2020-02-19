@@ -72,6 +72,14 @@ public abstract class AbstractMQTTSampler extends AbstractSampler implements Con
 		setProperty(WS_PATH, wsPath);
 	}
 
+	public String getWsAuthHeader() {
+		return getPropertyAsString(WS_AUTH_HEADER, "");
+	}
+
+	public void setWsAuthHeader(String wsAuthHeader) {
+		setProperty(WS_AUTH_HEADER, wsAuthHeader);
+	}
+
 	public boolean isDualSSLAuth() {
 		return getPropertyAsBoolean(DUAL_AUTH, false);
 	}

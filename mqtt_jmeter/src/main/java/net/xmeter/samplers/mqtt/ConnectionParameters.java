@@ -15,6 +15,7 @@ public class ConnectionParameters {
     private int connectTimeout;
     private String username;
     private String password;
+    private String websocketAuthHeader;
     private boolean cleanSession;
     private String path;
 
@@ -113,6 +114,14 @@ public class ConnectionParameters {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getWebsocketAuthHeader() {
+        return websocketAuthHeader;
+    }
+
+    public void setWebsocketAuthHeader(String websocketAuthHeader) {
+        this.websocketAuthHeader = websocketAuthHeader;
     }
 
     public boolean isCleanSession() {

@@ -51,6 +51,9 @@ public class ConnectSampler extends AbstractMQTTSampler {
 			if (!"".equals(getWsPath().trim())) {
 				parameters.setPath(getWsPath());
 			}
+			if (!"".equals(getWsAuthHeader().trim())) {
+				parameters.setWebsocketAuthHeader(getWsAuthHeader());
+			}
 
 			String clientId;
 			if(isClientIdSuffix()) {

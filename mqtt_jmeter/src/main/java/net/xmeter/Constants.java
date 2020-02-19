@@ -9,6 +9,7 @@ public interface Constants {
 
 	public static final String PROTOCOL = "mqtt.protocol";
 	public static final String WS_PATH = "mqtt.ws_path";
+	public static final String WS_AUTH_HEADER = "mqtt.ws_auth_header";
 	public static final String DUAL_AUTH = "mqtt.dual_ssl_authentication";
 	public static final String CERT_FILE_PATH1 = "mqtt.keystore_file_path";
 	public static final String CERT_FILE_PATH2 = "mqtt.clientcert_file_path";
@@ -70,8 +71,10 @@ public interface Constants {
 	public static final String DEFAULT_PROTOCOL = TCP_PROTOCOL;
 	public static final String FUSESOURCE_MQTT_CLIENT_NAME = "fusesource";
 	public static final String HIVEMQ_MQTT_CLIENT_NAME = "hivemq";
+	public static final String PAHO_MQTT_CLIENT_NAME = "paho";
 //	public static final String DEFAULT_MQTT_CLIENT_NAME = FUSESOURCE_MQTT_CLIENT_NAME;
-	public static final String DEFAULT_MQTT_CLIENT_NAME = HIVEMQ_MQTT_CLIENT_NAME;
+//	public static final String DEFAULT_MQTT_CLIENT_NAME = HIVEMQ_MQTT_CLIENT_NAME;
+	public static final String DEFAULT_MQTT_CLIENT_NAME = PAHO_MQTT_CLIENT_NAME;
 	
 	public static final String JMETER_VARIABLE_PREFIX = "${";
 	
