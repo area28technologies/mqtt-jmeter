@@ -75,7 +75,7 @@ public class PahoMQTTClient implements MQTTClient {
 
     @Override
     public MQTTConnection connect() throws Exception {
-        logger.info(() -> "Connecting client: " + parameters.getClientId());
+        logger.info(() -> "Connecting: client= " + parameters.getClientId() + ", address=" + client.getServerURI());
         IMqttToken token = client.connect(connectOptions);
         token.waitForCompletion(-1);
         logger.info(() -> "Client connected: " + parameters.getClientId());

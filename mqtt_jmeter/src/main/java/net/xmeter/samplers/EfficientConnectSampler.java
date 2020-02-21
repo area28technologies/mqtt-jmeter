@@ -101,7 +101,7 @@ public class EfficientConnectSampler extends AbstractMQTTSampler {
 					} else {
 						subResult.setSuccessful(false);
 						subResult.setResponseData(MessageFormat.format("Client [{0}] failed. Could not subscribe to topic(s) {1}.", client.getClientId(), getTopics()).getBytes());
-						subResult.setResponseMessage(MessageFormat.format("Failed to subscripbe to topics(s) {0}.", getTopics()));
+						subResult.setResponseMessage(MessageFormat.format("Failed to subscribe to topics(s) {0}.", getTopics()));
 						subResult.setResponseCode("501");
 					}
 				} else {
