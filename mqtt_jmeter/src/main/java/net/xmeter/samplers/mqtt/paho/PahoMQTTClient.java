@@ -1,5 +1,6 @@
 package net.xmeter.samplers.mqtt.paho;
 
+import net.xmeter.Util;
 import net.xmeter.samplers.mqtt.ConnectionParameters;
 import net.xmeter.samplers.mqtt.MQTTClient;
 import net.xmeter.samplers.mqtt.MQTTClientException;
@@ -25,20 +26,9 @@ public class PahoMQTTClient implements MQTTClient {
     PahoMQTTClient(ConnectionParameters parameters) throws Exception {
         this.parameters = parameters;
         connectOptions = createConnectOptions(parameters);
-        String hostAddress = createHostAddress(parameters);
+        String hostAddress = Util.getFullAddress(parameters);
         MemoryPersistence persistence = new MemoryPersistence();
         client = new MqttAsyncClient(hostAddress, parameters.getClientId(), persistence);
-    }
-
-    private String createHostAddress(ConnectionParameters parameters) {
-        String addr = parameters.getProtocol().toLowerCase() + "://" + parameters.getHost() + ":" + parameters.getPort();
-        if (parameters.isWebSocketProtocol() && parameters.getPath() != null && parameters.getPath().length() > 0) {
-            if (!parameters.getPath().startsWith("/")) {
-                addr = addr + "/";
-            }
-            addr = addr + parameters.getPath();
-        }
-        return addr;
     }
 
     private MqttConnectOptions createConnectOptions(ConnectionParameters parameters)

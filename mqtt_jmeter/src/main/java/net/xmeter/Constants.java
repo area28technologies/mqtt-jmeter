@@ -64,10 +64,10 @@ public interface Constants {
 	public static final String DEFAULT_MQTT_VERSION = "3.1";
 	public static final String DEFAULT_PORT = "1883";
 	public static final String DEFAULT_CONN_TIME_OUT = "10";
-	public static final String TCP_PROTOCOL = "TCP";
-	public static final String SSL_PROTOCOL = "SSL";
-	public static final String WS_PROTOCOL = "WS";
-	public static final String WSS_PROTOCOL = "WSS";
+	public static final String TCP_PROTOCOL = "tcp";
+	public static final String SSL_PROTOCOL = "ssl";
+	public static final String WS_PROTOCOL = "ws";
+	public static final String WSS_PROTOCOL = "wss";
 	public static final String DEFAULT_PROTOCOL = TCP_PROTOCOL;
 	public static final String FUSESOURCE_MQTT_CLIENT_NAME = "fusesource";
 	public static final String HIVEMQ_MQTT_CLIENT_NAME = "hivemq";

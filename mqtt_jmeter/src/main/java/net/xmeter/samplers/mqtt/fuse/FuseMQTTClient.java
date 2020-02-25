@@ -50,7 +50,7 @@ class FuseMQTTClient implements MQTTClient {
     }
 
     private String createHostAddress(ConnectionParameters parameters) {
-        return parameters.getProtocol().toLowerCase() + "://" + parameters.getHost() + ":" + parameters.getPort();
+        return parameters.getProtocol() + "://" + parameters.getHost() + ":" + parameters.getPort();
     }
 
     @Override

@@ -41,11 +41,14 @@ public class ConnectSampler extends AbstractMQTTSampler {
 			return result;
 		}
 
+		String clientId = "<unknown>";
 		ConnectionParameters parameters = new ConnectionParameters();
 		try {
 			parameters.setProtocol(getProtocol());
 			parameters.setHost(getServer());
-			parameters.setPort(Integer.parseInt(getPort()));
+			if (!"".equals(getPort())) {
+				parameters.setPort(Integer.parseInt(getPort()));
+			}
 			parameters.setVersion(getMqttVersion());
 			parameters.setKeepAlive((short) Integer.parseInt(getConnKeepAlive()));
 			if (!"".equals(getWsPath().trim())) {
@@ -55,7 +58,6 @@ public class ConnectSampler extends AbstractMQTTSampler {
 				parameters.setWebsocketAuthHeader(getWsAuthHeader());
 			}
 
-			String clientId;
 			if(isClientIdSuffix()) {
 				clientId = Util.generateClientId(getConnPrefix());
 			} else {
@@ -101,11 +103,14 @@ public class ConnectSampler extends AbstractMQTTSampler {
 				result.setResponseCode("501");
 			}
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Failed to establish Connection " + connection , e);
-			if (result.getEndTime() == 0) result.sampleEnd(); //avoid re-enter sampleEnd()
+			logger.log(Level.SEVERE, "Failed to establish connection to " + Util.getFullAddress(parameters), e);
+			if (result.getEndTime() == 0L && result.getStartTime() != 0L) {
+				// avoid re-enter sampleEnd()
+				result.sampleEnd();
+			}
 			result.setSuccessful(false);
-			result.setResponseMessage(MessageFormat.format("Failed to establish Connection {0}.", connection));
-			result.setResponseData(MessageFormat.format("Client [{0}] failed with exception.", client.getClientId()).getBytes());
+			result.setResponseMessage(MessageFormat.format("Failed to establish connection to {0}.", Util.getFullAddress(parameters)));
+			result.setResponseData(MessageFormat.format("Client [{0}] failed with exception.", clientId).getBytes());
 			result.setResponseCode("502");
 		}
 		

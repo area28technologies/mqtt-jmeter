@@ -12,6 +12,7 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
+import net.xmeter.samplers.mqtt.ConnectionParameters;
 import org.apache.jmeter.services.FileServer;
 
 import net.xmeter.samplers.AbstractMQTTSampler;
@@ -102,10 +103,27 @@ public class Util implements Constants {
 	}
 
 	public static boolean isSecureProtocol(String protocol) {
-		return SSL_PROTOCOL.equals(protocol) || WSS_PROTOCOL.equals(protocol);
+		return SSL_PROTOCOL.equals(protocol.toLowerCase()) || WSS_PROTOCOL.equals(protocol.toLowerCase());
 	}
 
 	public static boolean isWebSocketProtocol(String protocol) {
-		return WS_PROTOCOL.equals(protocol) || WSS_PROTOCOL.equals(protocol);
+		return WS_PROTOCOL.equals(protocol.toLowerCase()) || WSS_PROTOCOL.equals(protocol.toLowerCase());
+	}
+
+	public static String getFullAddress(ConnectionParameters parameters) {
+		StringBuilder addr = new StringBuilder()
+				.append(parameters.getProtocol().toLowerCase())
+				.append("://")
+				.append(parameters.getHost());
+		if (parameters.getPort() > 0) {
+			addr.append(":").append(parameters.getPort());
+		}
+		if (parameters.isWebSocketProtocol() && parameters.getPath() != null && parameters.getPath().length() > 0) {
+			if (!parameters.getPath().startsWith("/")) {
+				addr.append("/");
+			}
+			addr.append(parameters.getPath());
+		}
+		return addr.toString();
 	}
 }
